@@ -1,12 +1,17 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const path = require("path");
 const { dependencies } = require("./package.json");
 
 module.exports = (env) => {
   return {
+    entry: "./src/index",
     mode: "development",
     devServer: {
-      port: 3000,
+      static: {
+        directory: path.join(__dirname, "public"),
+      },
+      port: 4000,
     },
     module: {
       rules: [
@@ -22,10 +27,6 @@ module.exports = (env) => {
             },
           ],
         },
-        {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
-        },
       ],
     },
     plugins: [
@@ -33,7 +34,8 @@ module.exports = (env) => {
         name: "remote",
         filename: "moduleEntry.js",
         exposes: {
-          "./Cart": "./src/Cart",
+          "./App": "./src/App",
+          "./Button": "./src/Button",
         },
         shared: {
           ...dependencies,

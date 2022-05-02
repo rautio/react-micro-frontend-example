@@ -1,0 +1,15 @@
+{
+  "name": "react-micro-frontend-example",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "host",
+      "remote"
+    ]
+  },
+  "scripts": {
+    "start": "npm run start:host & npm run start:remote",
+    "start:host": "cd ./host && npm start",
+    "start:remote": "cd ./remote && npm start"
+  }
+}

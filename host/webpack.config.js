@@ -4,6 +4,7 @@ const { dependencies } = require("./package.json");
 
 module.exports = (env) => {
   return {
+    entry: "./src/index",
     mode: "development",
     devServer: {
       port: 3000,
@@ -21,10 +22,6 @@ module.exports = (env) => {
               },
             },
           ],
-        },
-        {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
         },
       ],
     },

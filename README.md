@@ -2,6 +2,15 @@
 
 Simple example of using React in a micro-frontend architecture with Webpack Module Federation
 
+## How to use
+
+Run the following commands in the root directory.
+
+```bash
+yarn
+yarn start
+```
+
 # Blog
 
 ## Prerequisites
@@ -16,19 +25,27 @@ We are building 2 apps: A `host` and a `remote`. For simplicity the `host` app i
 
 `npx create-react-app remote`
 
+## Installs
+
+```bash
+npm install --save-dev webpack webpack-cli html-webpack-plugin webpack-dev-server babel-loader
+```
+
+## Setup Host/Remote App.js
+
 ## Module Federation
 
 ### In the Host
 
 The important part is:
 
-```
-  new ModuleFederationPlugin({
-    name: "host",
-    remotes: {
-      remote: `remote@localhost:4000/moduleEntry.js`,
-    },
-  })
+```js
+new ModuleFederationPlugin({
+  name: "host",
+  remotes: {
+    remote: `remote@localhost:4000/moduleEntry.js`,
+  },
+});
 ```
 
 This tells the Host app to look for a remote at `localhost:4000/moduleEntry.js` which we will define next.
@@ -37,15 +54,15 @@ This tells the Host app to look for a remote at `localhost:4000/moduleEntry.js` 
 
 The important part is:
 
-```
-  new ModuleFederationPlugin({
-    name: 'remote',
-    filename:
-      'moduleEntry.js',
-    exposes: {
-      './Cart': './src/Cart'
-    },
-  });
+```js
+new ModuleFederationPlugin({
+  name: "remote",
+  filename: "moduleEntry.js",
+  exposes: {
+    "./RemoteApp": "./src/App",
+    "./Button": "./src/Button",
+  },
+});
 ```
 
 Webpack's example app for peer-to-peer structure: https://stackblitz.com/github/webpack/webpack.js.org/tree/master/examples/module-federation?terminal=start&terminal=
