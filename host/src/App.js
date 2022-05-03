@@ -6,8 +6,8 @@ const RemoteButton = React.lazy(() => import("Remote/Button"));
 const RemoteWrapper = ({ children }) => (
   <div
     style={{
-      border: "1px solid rgb(132, 14, 93)",
-      background: "rgba(132, 14, 93, 0.3)",
+      border: "1px solid red",
+      background: "white",
     }}
   >
     <ErrorBoundary>{children}</ErrorBoundary>
@@ -15,7 +15,7 @@ const RemoteWrapper = ({ children }) => (
 );
 
 export const App = () => (
-  <div style={{ background: "rgba(76, 175, 80, 0.3)" }}>
+  <div style={{ background: "rgba(43, 192, 219, 0.3)" }}>
     <h1>This is the Host!</h1>
     <h2>Remote App:</h2>
     <RemoteWrapper>
