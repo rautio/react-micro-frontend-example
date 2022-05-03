@@ -1,10 +1,6 @@
 import React from "react";
-import Button from "./Button";
 
-export const App = () => (
-  <>
-    <h1>Remote!</h1>
-    <Button />
-  </>
-);
+export const App = () => {
+  return <div>Hello from the other side</div>;
+};
 export default App;
