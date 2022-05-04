@@ -1,6 +1,6 @@
 # react-micro-frontend-example
 
-Simple example of using React in a micro-frontend architecture with Webpack Module Federation
+Example of using React in host-remote micro-frontend pattern with Webpack Module Federation
 
 ## How to use
 
@@ -11,60 +11,30 @@ yarn
 yarn start
 ```
 
-# Blog
+Navigate to:
 
-## Prerequisites
+- `http://localhost:3000` for the host app
+- `http://localhost:4000` for the remote app
 
-- Create React App
+## Host App
 
-## Getting started
-
-We are building 2 apps: A `host` and a `remote`. For simplicity the `host` app is the "main" app and remote is a sub-app plugging into it. You could also treat the `host` as a remote and make the architecture a peer-to-peer instead of host-to-remote the way we are doing here.
-
-`npx create-react-app host`
-
-`npx create-react-app remote`
-
-## Installs
-
-```bash
-npm install --save-dev webpack webpack-cli html-webpack-plugin webpack-dev-server babel-loader
-```
-
-## Setup Host/Remote App.js
-
-## Module Federation
-
-### In the Host
-
-The important part is:
+Pulls `<App/>` and `<Button />` from the remote app and renders them. Example:
 
 ```js
-new ModuleFederationPlugin({
-  name: "host",
-  remotes: {
-    remote: `remote@localhost:4000/moduleEntry.js`,
-  },
-});
+const RemoteApp = React.lazy(() => import("Remote/App"));
 ```
 
-This tells the Host app to look for a remote at `localhost:4000/moduleEntry.js` which we will define next.
+## Remote App
 
-### In the Remote
+Exposes the modules in a `moduleEntry.js` file at `http://localhost:4000/moduleEntry.js`
 
-The important part is:
+`name: 'Remote'`
 
-```js
-new ModuleFederationPlugin({
-  name: "remote",
-  filename: "moduleEntry.js",
-  exposes: {
-    "./RemoteApp": "./src/App",
-    "./Button": "./src/Button",
-  },
-});
-```
+Exposes:
 
-Webpack's example app for peer-to-peer structure: https://stackblitz.com/github/webpack/webpack.js.org/tree/master/examples/module-federation?terminal=start&terminal=
+- `<App />`
+- `<Button />`
 
-Webpack docs: https://webpack.js.org/concepts/module-federation/
+## Notes
+
+To make this a peer-to-peer pattern you could also expose modules from the Host app and render them in Remote by modifying the host app's webpack config to also expose components and output a `moduleEntry.js` file.
